@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .regBtnInit {
+            width: 150px;
+            height: 40px;
+            line-height: 40px;
+            border: none;
+            background: #cccccc;
+        }
+        .active{
+            background: green;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="RegController">
+    <form method="post" name="regForm" novalidate>
+        username: <input type="text" ng-model="username" name="username" required>
+        <span ng-show="regForm.username.$dirty && regForm.username.$invalid">用户名不能为空</span>
+        <br>
+        phone: <input type="text" ng-model="phone" name="phone" required ng-pattern="/^1[35678][0-9]{9}$/"><br>
+        <span ng-show="regForm.phone.$dirty && regForm.phone.$invalid">
+            <span ng-show="regForm.phone.$error.required">手机号不能为空</span>
+            <span ng-show="regForm.phone.$error.pattern">手机号格式不正确</span>
+        </span>
+        <br>
+        password: <input type="password" ng-model="password" name="password" ng-minlength="6" ng-maxlength="12" required>
+        <span ng-show="regForm.password.$dirty && regForm.password.$invalid">
+            密码长度不能小于6位
+        </span><br>
+        passwordRepeat: <input type="password" ng-model="passwordRepeat" name="passwordRepeat">
+
+        <span ng-show="password!=passwordRepeat">
+            两次密码不一致
+        </span><br>
+        <input type="checkbox" ng-model="agreeRule">同意相关条款 <br>
+        <input type="button" class="regBtnInit" ng-click="reg(regForm.$valid && password==passwordRepeat && agreeRule)"
+               ng-class="{active:regForm.$valid && password==passwordRepeat && agreeRule}" value="reg">
+   <!--     表单：{{regForm.$valid}},{{regForm.$valid && password==passwordRepeat && agreeRule}}-->
+    </form>
+</div>
+<script src="../lib/angular.min.js"></script>
+<script>
+    angular.module("myApp",[])
+        .config(["$httpProvider",function($httpProvider){
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+            var param = function(obj) {
+                var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+                for (name in obj) {
+                    value = obj[name];
+                    if (value instanceof Array) {
+                        for (i = 0; i < value.length; ++i) {
+                            subValue = value[i];
+                            fullSubName = name + '[' + i + ']';
+                            innerObj = {};
+                            innerObj[fullSubName] = subValue;
+                            query += param(innerObj) + '&';
+                        }
+                    } else if (value instanceof Object) {
+                        for (subName in value) {
+                            subValue = value[subName];
+                            fullSubName = name + '[' + subName + ']';
+                            innerObj = {};
+                            innerObj[fullSubName] = subValue;
+                            query += param(innerObj) + '&';
+                        }
+                    } else if (value !== undefined && value !== null)
+                        query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+                }
+                return query.length ? query.substr(0, query.length - 1) : query;
+            };
+            $httpProvider.defaults.transformRequest = [
+                function(data) {
+                    return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+                }
+            ];
+        }])
+        .controller("RegController",["$scope","$http",function($scope,$http){
+            $scope.reg=function (isOk) {
+                if(isOk){
+                    console.log(isOk);
+                    $http({
+                        url:"http://localhost:3000/user/reg",
+                        method:"post",
+                        data:{
+                            name:$scope.username,
+                            phone:$scope.phone,
+                            password:$scope.password,
+                            passwordRepeat:$scope.passwordRepeat
+                        }
+                    }).then(function success(data){
+                        console.log(data);
+                    },function error(err){
+                        console.log(err);
+                    });
+                }else{
+                    console.log("表单输入不正确");
+                }
+            };
+        }]);
+</script>
+</body>
+</html>
+
+
+

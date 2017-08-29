@@ -1,0 +1,76 @@
+<div class="listpage clearfix" style="background:#f7f8f6;">
+    <div class="container">
+        <ul class="txtbox">
+            <li class="col-lg-12" >
+                <a href="" ng-click="clicktype(li)"  ng-repeat="li in arrtype">{{li}}</a>
+            </li><br>
+            <li class="col-lg-12">
+                <a>筹资中</a><a>即将结束</a><a class="bg">已成功</a>
+            </li><br>
+            <li class="col-lg-12 ">
+                <a class="bg" style="margin-right: 20px;">最新</a><a>热门</a><a>结束时间</a>
+            </li><br>
+        </ul>
+    </div>
+</div>
+
+<!--http://localhost:3000/images/proj/20151214170904.jpg-->
+<div class="clearfix container">
+    <div class="col-lg-12 ">
+        <div class="col-lg-4" ng-repeat="li in listData | filter:orderna" style="margin-top: 44px;">
+            <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+                <img class="img-responsive" src="{{li.img}}" style="height: 226px; width: 100%; border-top-left-radius: 5px;border-top-right-radius: 5px;">
+            </div>
+            <div class="col-lg-12" style="border:1px solid #ccc; border-top: none;">
+                <h5>{{li.name}}</h5>
+                <p>{{li.fname}}</p>
+                <p class="comment_inner">{{li.desc}}</p>
+                <p><i class="glyphicon glyphicon-tags"></i><span>&nbsp;{{li.type}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-blackboard"></i><span>影视推荐</span></p>
+                <div class="progress" style="margin-top: 20px; height: 8px;">
+                    <span class=" progress-bar progress-bar-warning" role="progressbar" ng-style="{width:(li.sp)+'%'}"><!--{{li.sp+"%"}}--></span><!--li.rprice/li.placement-->
+                </div>
+
+                <table>
+                    <tr>
+                        <td><span>{{li.sp+"%"}}</span></td>
+                        <td><span>{{"￥"+"--"}}</span></td>
+                        <td><span>{{li.rprice}}</span></td>
+                        <td><span>{{li.rday}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>进度</span></td>
+                        <td><span>支持金额</span></td>
+                        <td><span>支持者</span></td>
+                        <td><span>剩余天数</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center" style="margin: 30px;">
+    <a ng-repeat="p in arr" class="activea" ng-click="changePage($index+1)" ng-class="{active: $index+1==page}">{{p}}</a>
+    <a class="activea" ng-click="changePage($index+1)" ng-class="{active: $index+1==page}">尾 页</a>
+</div>
+
+
+
+<!--2017-8-8号，讲终点************************************************************************************************-->
+<!--<div class="list">
+    <h3>项目列表</h3>
+    <ul>
+        <li ng-repeat="item in listData">
+            <h5>{{item.name}}</h5>
+            <img ng-src="{{item.img}}" alt="" width="150px;">
+        </li>
+    </ul>
+
+    <div class="myPage">
+        <span ng-repeat="p in arr" style="display: inline-block; width:30px;border: 1px solid #ddd;"
+              ng-click="changePage($index+1)" ng-class="{active: $index+1==page}">{{p}}</span>
+    </div>
+</div>-->
+
+
+
+

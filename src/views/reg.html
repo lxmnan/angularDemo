@@ -1,0 +1,57 @@
+<div class=" clearfix" style="background: #f7fafa;" ng-controller="RegController">
+    <form method="post" name="regForm" novalidate>
+        <div class="col-lg-4 col-lg-offset-4" style="border: 1px solid #cccccc; padding: 20px 0px 0px 0px; border-radius: 5px;margin-top: 65px; margin-bottom: 65px; background: #ffffff; overflow: hidden;">
+            <h4 style="font-weight: bold; padding: 0px 20px 20px 18px;">注册</h4>
+            <div class="form-group myHei col-lg-12" ng-class="{'has-success':regForm.username.$valid}">
+                <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号码"
+                       ng-model="phone" required ng-pattern="/^1[35678][0-9]{9}$/">
+                <p class="glyphicon glyphicon-ok pos" ng-if="regForm.phone.$valid"></p>
+                <div  ng-show="regForm.phone.$dirty && regForm.phone.$invalid">
+                    <p class="glyphicon error" ng-show="regForm.phone.$error.required">手机号码不能为空</p>
+                    <p class="error" ng-show="regForm.phone.$error.pattern">您输入的号码有误，请检查！</p>
+                </div>
+
+            </div>
+            <div class="form-group myHei col-lg-12" ng-class="{'has-success':regForm.password.$valid}">
+                <input type="password"  class="form-control" name="password" placeholder="请输入您的密码"
+                       ng-model="password" ng-minlength="6" ng-maxlength="12" required>
+                <p class="glyphicon glyphicon-ok pos" ng-if="regForm.password.$valid"></p>
+                <div ng-show="regForm.password.$dirty && regForm.password.$invalid">
+                    <p class="error" ng-show="regForm.password.$error.required">密码不可为空</p>
+                    <p class="error" ng-show="regForm.password.$dirty && regForm.password.$invalid">密码错误，请重新输入！</p>
+                </div>
+
+            </div>
+            <div class="form-group myHei col-lg-12" ng-class="{'has-success':signUp.password2.$valid}">
+
+                <input name="password2" type="password" class="form-control" placeholder="确认密码"
+                       ng-model="passwordRepeat" compare="password" required>
+                <p class="glyphicon glyphicon-ok pos" ng-if="signUp.password2.$valid"></p>
+                <div>
+                    <p ng-show="password!=passwordRepeat">两次输入不一致</p>
+                </div>
+            </div>
+            <div class="myHei col-lg-12">
+                <input type="checkbox" ng-model="agreeRule">同意《全民创造用户协议》 {{agreeRule}}
+            </div>
+            <div class="myHei col-lg-12" >
+                <input type="button" class="regBtnInit" ng-click="reg(regForm.$valid && password==passwordRepeat && agreeRule)"
+                       ng-class="{active:regForm.$valid && password==passwordRepeat && agreeRule}" value="登   录">
+            </div>
+
+            <div style="text-align: center;" class="col-lg-12">
+                <span style="z-index: 56; position: relative; top:32px; padding: 3px 14px; background: #ffffff;">第三方登录</span>
+                <hr style="border-bottom: 1px solid #cccccc;">
+            </div>
+            <div class="col-lg-12" style="text-align: center; padding: 6px 0px;">
+                <i class="fa fa-weixin" aria-hidden="true" style="color: #02bb00; border-color: #02bb00;"></i>
+                <i class="fa fa-qq" aria-hidden="true" style="color: #4f94cf;  border-color: #4f94cf;"></i>
+                <i class="fa fa-weibo" aria-hidden="true" style="color: #db2920;  border-color: #db2920;"></i>
+            </div>
+            <div class="col-lg-12" style="background: #f7f7f8; height: 58px; text-align: center; padding: 0px; line-height: 58px; border-top: 1px solid #cccccc;">
+                <span>已有账户？</span><a ui-sref="login" style="color: #00a0ff;">登录</a>
+            </div>
+        </div>
+
+    </form>
+</div>

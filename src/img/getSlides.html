@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="FirstController">
+    <div ng-repeat="slide in slides">
+        <p>{{slide.name}}</p>
+        <img ng-src="{{slide.img}}" alt="">
+    </div>
+</div>
+
+<script src="../lib/angular.min.js"></script>
+<script>
+    angular.module("myApp",[])
+        .controller("FirstController",["$scope","$http",function($scope,$http){//为了防止压缩函数的参数
+            $scope.slides=[];
+
+            $http.get("http://localhost:3000/IndexInfo").then(function success(data){
+                $scope.slides=data.data.result.slides;
+            },function error(err){
+                console.log(err);
+            });
+        }]);
+</script>
+</body>
+</html>

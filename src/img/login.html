@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="RegController">
+    <form method="post">
+        phone: <input type="text" ng-model="phone"><br>
+        password: <input type="password" ng-model="password"><br>
+        <input type="button" ng-click="reg()" value="login">
+    </form>
+</div>
+
+<script src="../lib/angular.min.js"></script>
+<script>
+    angular.module("myApp",[])
+        .config(["$httpProvider",function ($httpProvider) {
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+            var param = function(obj) {
+                var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+                for (name in obj) {
+                    value = obj[name];
+                    if (value instanceof Array) {
+                        for (i = 0; i < value.length; ++i) {
+                            subValue = value[i];
+                            fullSubName = name + '[' + i + ']';
+                            innerObj = {};
+                            innerObj[fullSubName] = subValue;
+                            query += param(innerObj) + '&';
+                        }
+                    } else if (value instanceof Object) {
+                        for (subName in value) {
+                            subValue = value[subName];
+                            fullSubName = name + '[' + subName + ']';
+                            innerObj = {};
+                            innerObj[fullSubName] = subValue;
+                            query += param(innerObj) + '&';
+                        }
+                    } else if (value !== undefined && value !== null)
+                        query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+                }
+                return query.length ? query.substr(0, query.length - 1) : query;
+            };
+            $httpProvider.defaults.transformRequest = [
+                function(data) {
+                    return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+                }
+            ];
+        }])
+            .controller("RegController",["$scope","$http",function($scope,$http){
+            $scope.reg=function () {
+                $http({
+                    url:"http://localhost:3000/user/login",
+                    method:"post",
+                    data:{
+                        phone:$scope.phone,
+                        password:$scope.password
+                    }
+                }).then(function success(data){
+                    console.log(data);
+                },function error(err){
+                    console.log(err);
+                });
+            };
+    }]);
+</script>
+</body>
+</html>

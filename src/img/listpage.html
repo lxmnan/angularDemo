@@ -1,0 +1,51 @@
+<script>
+    angular.module("myApp")
+        .controller("ListController", ["$http", "$scope", function($http, $scope){
+            $scope.arr = [];
+
+
+            $scope.changePage = function(p){
+                $scope.page = p;
+// console.log($scope.page);
+                $scope.getListData();
+            };
+
+            var obj = {
+                init: function(){
+                    $scope.cid = 0;
+                    $scope.staus = 0;
+                    $scope.page = 1;
+                    $scope.count = 9;
+
+                    $scope.getListData();
+                }
+            };
+
+            $scope.getListData = function(){
+                $http({
+                    url: "http://localhost:3000/prolist",
+                    method: "get",
+                    params: {
+                        cid: $scope.cid,
+                        status: $scope.staus,
+                        page: $scope.page,
+                        count: $scope.count
+                    }
+                }).then(function(data){
+                    console.log(data);
+                    var pageCount = Math.ceil(data.data.result.countAll / data.data.result.count);
+                    for(var i = 0; i < pageCount; i++){
+                        $scope.arr.push(i+1);
+                    }
+                    console.log(pageCount);
+                    $scope.listData = data.data.result.list;
+                }, function(err){
+                    console.log(err);
+                });
+            };
+
+//初始先加载第1页数据
+            obj.init();
+        }]);
+
+</script>

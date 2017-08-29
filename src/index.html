@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body ng-app="myApp">
+    <header style="height:70px; border:1px solid #cccccc;">
+        <div class="container" >
+                <div class="pull-left" style="font-size: 24px; font-weight: bold;">全民<span style="color:#ff4200;">创造</span></div>
+                <div class="pull-left" style="margin-left: 28px;">
+                    <a style="background:  #f7fafa;">首页</a>
+                    <a href="">节目专栏</a>
+                    <a href="">圈子</a>
+                </div>
+                <div class="pull-left" style=" margin-top: -12px;">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search" style="width: 320px; margin-left: 36px; margin-right: -9px;">
+                        </div>
+                        <button type="submit" class="btn btn-default" style="border-radius: 0px 3px 3px 0px; height: 34px; margin-top: 1px;"><i class="glyphicon glyphicon-search"></i></button>
+                    </form>
+                </div>
+                <div class="pull-right">
+                  <!--  <a ui-sref="login" style="color: red">登陆</a>
+                    <a ui-sref="reg" style="color: red">注册</a>-->
+
+
+                    <li class="box_3" ng-if="!loginUser">
+                        <a ui-sref="login">登录</a>  &nbsp;&nbsp;&nbsp; <a ui-sref="reg">注册</a>
+                    </li>
+                    <li class="box_3" ng-if="loginUser">
+                        <a  ui-sref="per.infos">{{loginUser.phone}}</a>  &nbsp;&nbsp;&nbsp; <a ui-sref="loginout">退出</a>
+                    </li>
+                </div>
+        </div>
+    </header>
+
+    <ui-view></ui-view>
+
+    <footer  style=" background: #150b09; height: 98px;">
+        <div class="container" style="line-height: 98px;">
+            <div class="col-lg-9">
+                <a href="">关于全民创造</a>
+                <a href="" style="color: #ff4200;">全民创造用户协议</a>
+                <a href=""> 全民创造风险提示</a>
+                <a href="">联系我们</a></div>
+            <div class="col-lg-3" style="font-size: 24px; font-weight: bold; color: #ffffff; text-align: right;">
+                全民
+                <span style="color:#ff4200;">创造</span>
+                <span style="font-size: 14px; color:#828587; font-weight: normal;"> @ 2015</span>
+            </div>
+        </div>
+    </footer>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controller/RegController.js"></script>
+    <script src="js/controller/HomeController.js"></script>
+    <script src="js/controller/LoginController.js"></script>
+    <script src="lib/js/jquery-1.11.1.min.js"></script>
+    <script src="lib/js/bootstrap.js"></script>
+    <script src="js/controller/LoginOutController.js"></script>
+    <script src="js/controller/ListPageController.js"></script>
+    <script src="js/controller/PerController.js"></script>
+
+
+</body>
+</html>

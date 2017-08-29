@@ -1,0 +1,20 @@
+<div style="background: #f5f4f3;">
+    <div style="background: #effaff; height: 245px; border-bottom: 1px solid #cccccc">
+        <div class="container clearfix">
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+    <!--<ui-view></ui-view>-->
+    <div class="container" style="overflow: hidden;">
+        <div class="pull-left" style="background: #ffffff; width: 18%; text-align: center;  padding: 30px 0px; ">
+            <p><a ui-sref="per.infoslis">个人主页</a></p>
+            <p><a  ui-sref="per.infos">个人信息</a></p>
+            <p><a  ui-sref="per.infoslis">安全设置</a></p>
+            <p><a  ui-sref="per.infos">关注的圈子</a></p>
+            <p><a  ui-sref="per.infoslis">购买日期</a></p>
+        </div>
+        <div ui-view name="informationone" class="pull-right" style="background: #ffffff;height:100px; width: 80%; height: 198px;"></div>
+    </div>
+    <!--<a ui-sref="per.infoslis">调转</a>-->
+
+</div>
